@@ -11,6 +11,7 @@
 #include "Device.h"
 #include "Client.h"
 #include "TempMonitor.h"
+#include "UptimeMonitor.h"
 
 const char *usage = "./client SERVER_IP SERVER_PORT [DEVICE-TYPE DEVICE-ID] ... [DEVICE-TYPE DEVICE-ID]\n";
 
@@ -52,6 +53,9 @@ int main(int argc, char **argv)
 
         if (it->second == EHW::Device::Type::TEMP_MONITOR) {
             device = std::make_unique<EHW::TempMonitor>(EHW::TempMonitor(device_id));
+        }
+        else if (it->second == EHW::Device::Type::UPTIME_MONITOR) {
+            device = std::make_unique<EHW::UptimeMonitor>(EHW::UptimeMonitor(device_id));
         }
         else {
             throw std::runtime_error("Unimplemented device type");
